@@ -107,9 +107,9 @@ class VirtualizedCheckbox extends Component {
         ? propsItems.map(item => ({ [this.props.labelKey]: item }))
         : propsItems;
     const items = getDistinctFast(objectItems, this.props.labelKey);
-    this.state = {
+    this.setState({
       items
-    };
+    });
   }
 
   handleSelectAllChange = checked => {
