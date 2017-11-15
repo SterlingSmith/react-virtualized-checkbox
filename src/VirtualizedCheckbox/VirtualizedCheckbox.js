@@ -100,16 +100,28 @@ class VirtualizedCheckbox extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    const { items: propsItems } = nextProps;
-  
-    const objectItems =
-      typeof propsItems[0] === 'string'
-        ? propsItems.map(item => ({ [this.props.labelKey]: item }))
-        : propsItems;
-    const items = getDistinctFast(objectItems, this.props.labelKey);
-    this.setState({
-      items
-    });
+    const { items: propsItems, labelKey } = nextProps;
+
+    let propsEqual = nextProps.items.length === this.props.items.length
+    let elementsEqual
+    if (propsEqual) {
+      elementsEqual = nextProps.items.every((element, index, array) => { 
+        const propElement = this.props.items[index]
+        // compare each label, value, and checked
+        return propElement[this.props.labelKey] === element[labelKey] && propElement.value === element.value && propElement.checked === element.checked
+      })
+    }
+
+    if (!elementsEqual || !propsEqual)
+      const objectItems =
+        typeof propsItems[0] === 'string'
+          ? propsItems.map(item => ({ [nextProps.labelKey]: item }))
+          : propsItems;
+      const items = getDistinctFast(objectItems, nextProps.labelKey);
+      this.setState({
+        items
+      });
+    }
   }
 
   handleSelectAllChange = checked => {
