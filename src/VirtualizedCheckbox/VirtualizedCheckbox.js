@@ -112,7 +112,7 @@ class VirtualizedCheckbox extends Component {
       })
     }
 
-    if (!elementsEqual || !propsEqual)
+    if (!elementsEqual || !propsEqual) {
       const objectItems =
         typeof propsItems[0] === 'string'
           ? propsItems.map(item => ({ [nextProps.labelKey]: item }))
